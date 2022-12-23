@@ -3,6 +3,11 @@ const express = require("express")
 const mongoose = require("mongoose")
 const app = express();
 
+const authRoutes = require("./routes/authRoutes")
+const userRoutes = require("./routes/userRoutes")
+
+app.use(express.json())
+
 mongoose.set('strictQuery', false);
 // connect to db
 mongoose.connect(process.env.MONGO_URL)
@@ -16,3 +21,5 @@ mongoose.connect(process.env.MONGO_URL)
     })
 
 
+app.use('/api/auth', authRoutes)
+app.use('/api/user', userRoutes)
