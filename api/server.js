@@ -6,6 +6,7 @@ const app = express();
 const authRoutes = require("./routes/authRoutes")
 const userRoutes = require("./routes/userRoutes")
 const postRoutes = require("./routes/postRoutes")
+const categories = require("./routes/categoryRoutes")
 app.use(express.json())
 
 mongoose.set('strictQuery', false);
@@ -24,3 +25,4 @@ mongoose.connect(process.env.MONGO_URL)
 app.use('/api/auth', authRoutes)
 app.use('/api/user', userRoutes)
 app.use('/api/post', postRoutes)
+app.use('/api/categories', categories)
