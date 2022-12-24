@@ -2,6 +2,7 @@ const User = require('../models/User')
 const Post = require("../models/Post")
 const bcrypt = require('bcrypt')
 const {isEmail, isStrongPassword} = require("validator")
+
 // GET
 const GET_USER = async (req, res) => {
     const {id} = req.params;
