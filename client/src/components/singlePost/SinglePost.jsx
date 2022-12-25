@@ -15,7 +15,7 @@ function SinglePost() {
     }
     getPost();
   }, [])
-
+  const PF = "http://localhost:4000/images/"
   return (
 
     <div className='singlePost'>
@@ -23,7 +23,7 @@ function SinglePost() {
         {post.photo && (
           <img
           className="singlePostImg"
-          src={post.photo}
+          src={PF + post.photo}
           alt=""
         />
         )}

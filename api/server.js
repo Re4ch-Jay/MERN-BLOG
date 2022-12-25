@@ -2,7 +2,7 @@ require('dotenv').config()
 const express = require("express")
 const mongoose = require("mongoose")
 const app = express();
-
+const path = require('path')
 
 const authRoutes = require("./routes/authRoutes")
 const userRoutes = require("./routes/userRoutes")
@@ -11,7 +11,7 @@ const categories = require("./routes/categoryRoutes")
 const upload = require("./routes/uploadRoutes")
 
 app.use(express.json())
-
+app.use("/images", express.static(path.join(__dirname, "/images")))
 mongoose.set('strictQuery', false);
 // connect to db
 mongoose.connect(process.env.MONGO_URL)

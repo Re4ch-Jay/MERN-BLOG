@@ -2,12 +2,16 @@ import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import './register.css'
 import axios from 'axios'
+import { useContext } from 'react'
+import { Context } from '../../context/Context'
 
 function Register() {
   const [username, setUsername] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
+
+  const {dispatch} = useContext(Context)
 
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
@@ -17,6 +21,7 @@ function Register() {
         username, email, password 
       })
       if(res) {
+        dispatch({type: "LOGIN_SUCCESS", payload: res.data})
         navigate('/')
       }
       console.log(res)
