@@ -31,7 +31,7 @@ const GET_POST = async (req, res) => {
     }
 }
 
-// Get all post
+// Get all post and query
 const GET_ALL_POSTS = async (req, res) => {
     const username = req.query.username;
     const catName = req.query.category;
