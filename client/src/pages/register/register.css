@@ -63,3 +63,12 @@
     text-decoration: underline;
     cursor: pointer;
 }
+
+.error {
+    background-color: #eb7878;
+    padding: 10px;
+    text-align: center;
+    margin: 10px 0;
+    border-radius: 10px;
+    color: #ffff;
+}

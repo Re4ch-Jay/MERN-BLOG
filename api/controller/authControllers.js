@@ -36,19 +36,19 @@ const REGISTER = async (req, res) => {
 }
 
 const LOGIN = async (req, res) => {
-    const {email, password, username} = req.body;
+    const {password, username} = req.body;
     try {
-        if(!email && password) throw Error("All fields are required")
-        if(!email) throw Error("Email is required")
+        if(!username && password) throw Error("All fields are required")
+        if(!username) throw Error("Username is required")
         if(!password) throw Error("Password is required")
-        const user = await User.findOne({email});
+        const user = await User.findOne({username});
 
-        if(!user) throw Error("Incorrect email");
+        if(!user) throw Error("Incorrect username");
 
         const passwordMatch = await bcrypt.compare(password, user.password)
         if(!passwordMatch) throw Error("Incorrect password");
 
-        res.status(200).json({email});
+        res.status(200).json(user);
 
     } catch (error) {
         console.log(error);
