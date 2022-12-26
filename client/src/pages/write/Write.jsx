@@ -3,9 +3,11 @@ import './write.css'
 import axios from 'axios'
 import {useNavigate} from 'react-router-dom'
 import {Context} from '../../context/Context'
+
 function Write() {
     const [title, setTitle] = useState('');
     const [desc, setDesc] = useState('');
+    const [categories, setCategories] = useState('game');
     const [file, setFile] = useState(null);
     const navigate = useNavigate()
     const {user} = useContext(Context)
@@ -16,6 +18,7 @@ function Write() {
             username: user.username,
             title,
             desc,
+            categories: categories
         }
         if(file) {
             const data = new FormData()
@@ -33,11 +36,10 @@ function Write() {
         }
         try {
             const res = await axios.post('/post', newPost)
-            window.location.replace("/post/" + res.data._id);
+            navigate(`/post/${res.data._id}`)
         } catch (error) {
             console.log(error)
-        }
-        
+        } 
     }
   return (
     <div className='write'>
@@ -61,6 +63,14 @@ function Write() {
                 />
             </div>
             <div className="writeFormGroup">
+                <select id="categories" className='writeInput' onChange={e => setCategories(e.target.value)} value={categories}>
+                    <option value="game">Game</option>
+                    <option value="music">Music</option>
+                    <option value="life">Life</option>
+                    <option value="sport">Sport</option>
+                </select>
+            </div>
+            <div className="writeFormGroup">
                 <textarea 
                     className='writeInput writeText'
                     type="text" 
@@ -69,6 +79,8 @@ function Write() {
                     value={desc}
                  ></textarea>
             </div>
+         
+            
             <button type='submit' className='writeSubmit'>Post Blog</button>
         </form>
     </div>

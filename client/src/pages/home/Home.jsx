@@ -7,12 +7,17 @@ import { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 function Home() {
   const [posts, setPosts] = useState([])
+  const [error, setError] = useState('');
   const location = useLocation()
-  console.log(location.search)
+  console.log(location)
   useEffect(() => {
     const fetchPost = async () => {
-      const res = await axios.get("/post"+location.search)
-      setPosts(res.data)
+      try {
+        const res = await axios.get("/post"+location.search)
+        setPosts(res.data)
+      } catch (error) {
+        console.log(error)
+      }
     }
     fetchPost()
   }, [location.search])
