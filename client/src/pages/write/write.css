@@ -30,7 +30,7 @@
     font-size: 30px;
     border: none;
     padding: 20px;
-    width: 30vw;
+    width: 100vw;
 }
 
 .writeInput:focus {
