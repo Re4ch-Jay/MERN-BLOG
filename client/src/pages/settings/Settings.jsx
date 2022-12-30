@@ -9,9 +9,11 @@ function Settings() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [file, setFile] = useState(null);
   const [deleteModal, setDeleteModal] = useState(false);
   
   const {user, dispatch} = useContext(Context)
+  const PF = "http://localhost:4000/images/"
   const navigate = useNavigate()
 
   const handleDelete = async () => {
@@ -25,13 +27,34 @@ function Settings() {
 
   const handleUpdate = async (e) => {
     e.preventDefault();
+    dispatch({type: "UPDATE_START"})
+    const updatedUser = {
+      userId: user._id, username, email, password
+    }
+    if(file) {
+        const data = new FormData()
+        const filename = Date.now() + file.name;
+        data.append('name', filename);
+        data.append('file', file);
+        updatedUser.profilePicture = filename
+
+        try {
+            await axios.post('/upload', data)
+        } catch (error) {
+            console.log(error)
+        }
+    }
     try {
-      const res = await axios.put(`/user/${user._id}`, {userId: user._id, username, email, password})
+      const res = await axios.put(`/user/${user._id}`, updatedUser)
       console.log(res)
+      dispatch({type: "UPDATE_SUCCESS", payload: res.data})
     } catch (error) {
       console.log(error)
+      dispatch({type: "UPDATE_FAILURE", payload: error.response.data.error})
     }
   }
+
+
   useEffect(() => {
     const fetchUser = async () => {
       try {
@@ -40,8 +63,10 @@ function Settings() {
         setUsername(res.data.username);
         setEmail(res.data.email);
         setPassword(res.data.password);
+        
       } catch (error) {
         console.log(error)
+        
       }
     }
     fetchUser()
@@ -54,24 +79,26 @@ function Settings() {
           <span className="settingUpdateTitle">Update Your Account</span>
           <span className="settingDeleteTitle" onClick={() => setDeleteModal(true)}>Delete Account</span>
         </div>
-        <form className='settingForm'>
+        <form className='settingForm' onSubmit={handleUpdate}>
           <label>Profile Picture</label>
           <div className="settingProfilePicture">
-            <img
+          
+              <img
                 className='settingImg'
-                src="https://images.pexels.com/photos/6685428/pexels-photo-6685428.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
+                src={file ? URL.createObjectURL(file) : PF+user.profilePicture}
                 alt=""
               />
+              
               <label htmlFor="fileInput"><i className="settingProfilePictureIcon fa-solid fa-user"></i></label>
-              <input type="file" id="fileInput" style={{display: 'none'}} />
+              <input type="file" id="fileInput" onChange={e => setFile(e.target.files[0])} style={{display: 'none'}} />
           </div>
           <label>Username</label>
           <input type="text" placeholder='John Doe' value={username} onChange={e => setUsername(e.target.value)}/>
           <label>Email</label>
           <input type="email" placeholder='johndoe@gmail.com' value={email} onChange={e => setEmail(e.target.value)} />
           <label>Password</label>
-          <input type="password" value={password} onChange={e => setPassword(e.target.value)} />
-          <button className='settingSubmit' type='submit' onClick={handleUpdate}>Update Profile</button>
+          <input type="password" placeholder='New Password' onChange={e => setPassword(e.target.value)} />
+          <button className='settingSubmit' type='submit'>Update Profile</button>
         </form>
       </div>
       {deleteModal && (
