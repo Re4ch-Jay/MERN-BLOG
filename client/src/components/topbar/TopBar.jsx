@@ -11,6 +11,9 @@ function TopBar() {
   return (
     <div className='top'>
       <div className="topLeft">
+        <Link to="/">
+          <div className='logo'> Code with Reach BLOG </div>
+        </Link>
         <i className="topIcon fa-brands fa-square-facebook"></i>
         <i className="topIcon fa-brands fa-square-twitter"></i>
         <i className="topIcon fa-brands fa-square-instagram"></i>

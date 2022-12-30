@@ -1,5 +1,4 @@
 import './home.css'
-import Header from '../../components/header/Header'
 import Posts from '../../components/posts/Posts'
 import Sidebar from '../../components/sidebar/Sidebar'
 import axios from 'axios'
@@ -23,7 +22,6 @@ function Home() {
   }, [location.search])
   return (
     <div>
-      <Header  />
       <div className='home'>
           <Posts posts={posts}/>
           <Sidebar />
