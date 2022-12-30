@@ -9,6 +9,7 @@ function Settings() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [deleteModal, setDeleteModal] = useState(false);
   
   const {user, dispatch} = useContext(Context)
   const navigate = useNavigate()
@@ -16,6 +17,7 @@ function Settings() {
   const handleDelete = async () => {
     const res = await axios.delete(`/user/${user._id}`, {data: {userId: user._id}});
     if(res) {
+      setDeleteModal(false)
       dispatch({type: "LOGOUT"})
       navigate('/')
     }
@@ -50,7 +52,7 @@ function Settings() {
       <div className="settingWrapper">
         <div className="settingTitle">
           <span className="settingUpdateTitle">Update Your Account</span>
-          <span className="settingDeleteTitle" onClick={handleDelete}>Delete Account</span>
+          <span className="settingDeleteTitle" onClick={() => setDeleteModal(true)}>Delete Account</span>
         </div>
         <form className='settingForm'>
           <label>Profile Picture</label>
@@ -72,6 +74,22 @@ function Settings() {
           <button className='settingSubmit' type='submit' onClick={handleUpdate}>Update Profile</button>
         </form>
       </div>
+      {deleteModal && (
+        <div className="modal">
+          <div className="modalTextTitle">
+            Do you want to delete your account?
+          </div>
+          <div className="modalOption">
+            <button className="modalYes" onClick={handleDelete}>
+              Yes
+            </button>
+            <button className="modalNo" onClick={() => setDeleteModal(false)}>
+              No
+            </button>
+          </div>
+        </div>
+      )}
+      
       <Sidebar />
     </div>
   )

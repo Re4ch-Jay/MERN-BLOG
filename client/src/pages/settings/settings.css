@@ -81,3 +81,54 @@
     margin-top: 20px;
     cursor: pointer;
 }
+
+/* modal */
+
+.modal{
+    position: absolute;
+    top: 50%;
+    right: 50%;
+    background: #eee;
+    padding: 20px;
+    border-radius: 5px;
+
+}
+
+.modalTextTitle {
+    font-weight: bold;
+    font-size: 20px;
+    padding: 10px 0;
+}
+
+.modalOption {
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+}
+
+.modalYes {
+    background-color: #4a9fe4;
+    padding: 15px;
+    color: white;
+    border-radius: 7px;
+    width: 50px;
+    text-align: center;
+    cursor: pointer;
+    border: none;
+    
+}
+
+.modalNo{
+    background-color: crimson;
+    padding: 15px;
+    color: white;
+    border-radius: 7px;
+    width: 50px;
+    text-align: center;
+    cursor: pointer;
+    border: none;
+}
+
+i {
+    cursor: pointer;
+}
